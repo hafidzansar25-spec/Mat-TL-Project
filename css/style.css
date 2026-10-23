@@ -1160,3 +1160,17 @@ body:has(.auth-wrap) .auth-wrap {
 /* Saat sandi terlihat: balik */
 .pw-toggle.visible .icon-eye     { display: none; }
 .pw-toggle.visible .icon-eye-off { display: block; }
+
+/* ============================================================
+   FIX AUTOFILL BROWSER (Agar tidak merusak estetika Dark Mode)
+   ============================================================ */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+  /* Trik box-shadow besar untuk menutupi background bawaan browser */
+  -webkit-box-shadow: 0 0 0 50px var(--bg-card) inset !important;
+  -webkit-text-fill-color: var(--text-main) !important;
+  transition: background-color 5000s ease-in-out 0s;
+  caret-color: var(--text-main);
+}
