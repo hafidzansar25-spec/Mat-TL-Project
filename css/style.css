@@ -898,3 +898,212 @@ body:has(.auth-wrap) .auth-wrap {
     max-width: none;
   }
 }
+
+/* ============================================================
+   MOBILE NAVBAR v3 — Hamburger (☰) + Dropdown Drawer
+   ============================================================ */
+
+/* .nav-menu: desktop = transparan (children jadi flex item nav-inner langsung) */
+.nav-menu { display: contents; }
+
+/* Tombol hamburger — default tersembunyi */
+.nav-toggle {
+  display: none;
+  background: transparent;
+  border: 0;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+.nav-toggle:hover { background: rgba(255,255,255,0.12); }
+.nav-toggle span {
+  display: block;
+  width: 22px;
+  height: 2.5px;
+  background: #fff;
+  border-radius: 2px;
+  margin: 4px 0;
+  transition: transform 0.3s ease, opacity 0.2s ease;
+}
+/* Animasi ☰ → ✕ saat aktif */
+.nav-toggle.active span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-toggle.active span:nth-child(2) { opacity: 0; }
+.nav-toggle.active span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* Overlay gelap di belakang menu */
+.nav-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(2px);
+  z-index: 98;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.nav-overlay.visible { display: block; opacity: 1; }
+
+/* ============================================================
+   MOBILE: Top bar 54px + Dropdown panel
+   ============================================================ */
+@media (max-width: 900px) {
+  /* Navbar jadi bar tipis 54px — TIDAK mengganggu page-header */
+  nav#navbar {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: auto;
+    width: 100%;
+    height: auto;
+    padding: 0;
+    overflow: visible;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+  }
+
+  .nav-inner {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    gap: 12px;
+    height: 54px;
+    padding: 0 14px;
+    position: relative;
+  }
+
+  .brand {
+    order: 1;
+    flex: 1;
+    min-width: 0;
+    font-size: 15px;
+    padding: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .nav-toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    order: 2;
+  }
+
+  /* Dropdown panel — tersembunyi default */
+  .nav-menu {
+    display: none;
+    position: absolute;
+    top: 54px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    background: var(--sidebar-bg);
+    border-top: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.35);
+    padding: 8px;
+    max-height: calc(100dvh - 54px);
+    overflow-y: auto;
+    z-index: 101;
+  }
+  .nav-inner.open .nav-menu { display: flex; }
+
+  /* Menu links: stacked vertikal */
+  .nav-menu .nav-links {
+    order: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 0;
+    overflow: visible;
+    flex: none;
+    width: 100%;
+  }
+  .nav-menu .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    font-size: 14px;
+    border-radius: 8px;
+    color: var(--sidebar-muted);
+    background: transparent;
+    white-space: normal;
+    flex: none;
+  }
+  .nav-menu .nav-link::before {
+    display: inline-block;
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.5;
+    flex-shrink: 0;
+  }
+  .nav-menu .nav-link:hover {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+  }
+  .nav-menu .nav-link.active {
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    font-weight: 700;
+  }
+  .nav-menu .nav-link.active::before {
+    opacity: 1;
+    background: var(--emerald-light);
+    box-shadow: 0 0 10px var(--emerald-light);
+  }
+
+  /* User info + logout di bawah menu */
+  .nav-menu .nav-user {
+    order: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 8px 0 0;
+    padding: 12px 14px;
+    background: rgba(0,0,0,0.22);
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .nav-menu .user-info {
+    display: block;
+    color: var(--sidebar-muted);
+    font-size: 13px;
+    line-height: 1.4;
+  }
+  .nav-menu .user-info .role {
+    color: var(--emerald-light);
+    font-weight: 700;
+  }
+  .nav-menu .btn-logout {
+    width: 100%;
+    padding: 10px;
+    background: rgba(239,68,68,0.25);
+    color: #fecaca;
+    border: 1px solid rgba(239,68,68,0.4);
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+  }
+  .nav-menu .btn-logout:hover {
+    background: rgba(239,68,68,0.4);
+    color: #fff;
+  }
+
+  /* Content */
+  .container {
+    margin-left: 0;
+    padding: 20px 16px 64px;
+    max-width: none;
+  }
+}
