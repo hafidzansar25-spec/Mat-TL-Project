@@ -3,7 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kalender — Sekolah Sampah</title>
+  <title>Kalender — Catatan Bank Sampah</title>
+
+  <!-- A. Init tema sebelum paint -->
+  <script>
+    (function () {
+      var t = localStorage.getItem('sw_theme') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -15,12 +24,10 @@
         <p class="sub" id="pageSub"></p>
       </div>
     </div>
-
     <div class="card">
       <div class="cal-header" id="calHeader"></div>
       <div class="cal-grid" id="calGrid"></div>
     </div>
-
     <div class="card" id="detailBox" style="margin-top:16px; display:none;">
       <h2 class="card-title" id="detailTitle"></h2>
       <ul class="detail-list" id="detailList"></ul>
@@ -31,5 +38,26 @@
   <script src="js/auth.js"></script>
   <script src="js/navbar.js"></script>
   <script src="js/kalender.js"></script>
+
+  <!-- B. Toggle tema -->
+  <button class="theme-toggle" id="themeToggle" aria-label="Ganti tema">🌙</button>
+  <script>
+    (function () {
+      var btn = document.getElementById('themeToggle');
+      function sync() {
+        var cur = document.documentElement.getAttribute('data-theme') || 'light';
+        btn.textContent = cur === 'dark' ? '☀️' : '🌙';
+        btn.title = cur === 'dark' ? 'Mode Terang' : 'Mode Gelap';
+      }
+      sync();
+      btn.addEventListener('click', function () {
+        var cur = document.documentElement.getAttribute('data-theme') || 'light';
+        var next = cur === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('sw_theme', next);
+        sync();
+      });
+    })();
+  </script>
 </body>
 </html>
