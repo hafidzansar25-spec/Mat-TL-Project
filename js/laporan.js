@@ -29,45 +29,45 @@
         <td>${e.date}</td>
         <td>${CATEGORIES[e.category]}</td>
         <td class="num">${e.weightKg} kg</td>
-        <td style="color:#6b7280;">${e.note || '-'}</td>
-        <td style="text-align:right;">
+        <td style="color:var(--text-muted);">${e.note || '-'}</td>
+        <td style="text-align:right; white-space:nowrap;">
+          <button class="btn-edit-text" data-edit="${e.id}">Edit</button>
           <button class="btn-danger-text" data-id="${e.id}">Hapus</button>
         </td>
       </tr>
     `).join('');
   }
 
-  // Hapus entri
+  // Handler klik: edit / hapus
   document.getElementById('tableBody').addEventListener('click', (e) => {
-    const btn = e.target.closest('button[data-id]');
-    if (!btn) return;
-    if (!confirm('Hapus entri ini?')) return;
-    deleteEntry(btn.dataset.id);
+    const editBtn = e.target.closest('button[data-edit]');
+    if (editBtn) {
+      window.location.href = `input.html?edit=${editBtn.dataset.edit}`;
+      return;
+    }
+
+    const delBtn = e.target.closest('button[data-id]');
+    if (!delBtn) return;
+
+    if (!confirm('Apakah kamu yakin ingin menghapus catatan ini?')) return;
+    deleteEntry(delBtn.dataset.id);
     render();
   });
 
-  // Filter bulan
   monthInput.addEventListener('change', render);
 
-  // Export CSV
   document.getElementById('btnExport').addEventListener('click', () => {
     const ym = monthInput.value || defaultMonth;
     const all = getEntries(user.id).filter(e => e.date.startsWith(ym));
-
-    if (all.length === 0) {
-      alert('Tidak ada data untuk diexport.');
-      return;
-    }
+    if (all.length === 0) { alert('Tidak ada data untuk diexport.'); return; }
 
     const rows = [
       ['Tanggal', 'Kategori', 'Berat (kg)', 'Catatan'],
       ...all.map(e => [e.date, CATEGORIES[e.category], e.weightKg, e.note || '']),
     ];
-
     const csv = rows
       .map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(','))
       .join('\n');
-
     const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
