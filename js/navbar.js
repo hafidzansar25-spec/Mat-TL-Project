@@ -14,7 +14,7 @@ function renderNavbar(activePage) {
 
   nav.innerHTML = `
     <div class="nav-inner">
-      <a href="dashboard.html" class="brand">🗑️ Sekolah Sampah</a>
+      <a href="dashboard.html" class="brand">♻️ Catatan Bank Sampah</a>
       <div class="nav-links">
         ${links.map(l => `
           <a href="${l.href}" class="nav-link ${l.href === activePage ? 'active' : ''}">${l.label}</a>
