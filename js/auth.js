@@ -20,3 +20,21 @@ function logoutUser() {
   clearSession();
   window.location.href = 'index.html';
 }
+
+/* ---------- Toggle lihat sandi ---------- */
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('.pw-toggle').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      const input = btn.parentElement.querySelector('input');
+      if (!input) return;
+      const reveal = input.type === 'password';
+      input.type = reveal ? 'text' : 'password';
+      btn.classList.toggle('visible', reveal);
+      btn.setAttribute('aria-label', reveal ? 'Sembunyikan sandi' : 'Tampilkan sandi');
+      // Cursor tetap di akhir teks supaya user bisa lanjut ketik
+      const end = input.value.length;
+      input.setSelectionRange(end, end);
+      input.focus();
+    });
+  });
+});
