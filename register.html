@@ -3,12 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Daftar — Sekolah Sampah</title>
+  <title>Daftar — Catatan Bank Sampah</title>
+
+  <!-- A. Init tema sebelum paint -->
+  <script>
+    (function () {
+      var t = localStorage.getItem('sw_theme') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <div class="auth-wrap">
-    <h1>📝 Daftar Akun</h1>
+    <h1>♻️ Daftar Akun</h1>
     <form id="registerForm">
       <div class="form-group">
         <label>Nama Lengkap</label>
@@ -37,9 +46,9 @@
       <p class="msg-err" id="err" style="display:none"></p>
       <button type="submit" class="btn-primary">Daftar</button>
     </form>
-    <p style="text-align:center; font-size:13px; color:#6b7280; margin-top:16px;">
+    <p style="text-align:center; font-size:13px; color:var(--text-muted); margin-top:16px;">
       Sudah punya akun?
-      <a href="index.html" style="color:#059669;">Masuk</a>
+      <a href="index.html" style="color:var(--emerald-dark); font-weight:600;">Masuk</a>
     </p>
   </div>
 
@@ -47,18 +56,15 @@
   <script src="js/auth.js"></script>
   <script>
     if (getCurrentUser()) window.location.href = 'dashboard.html';
-
     const roleSelect = document.getElementById('role');
     const kelasGroup = document.getElementById('kelasGroup');
     roleSelect.addEventListener('change', () => {
       kelasGroup.style.display = roleSelect.value === 'siswa' ? 'block' : 'none';
     });
-
     document.getElementById('registerForm').addEventListener('submit', (e) => {
       e.preventDefault();
       const err = document.getElementById('err');
       err.style.display = 'none';
-
       const payload = {
         name: document.getElementById('name').value.trim(),
         email: document.getElementById('email').value.trim(),
@@ -66,7 +72,6 @@
         role: roleSelect.value,
         kelas: roleSelect.value === 'siswa' ? document.getElementById('kelas').value.trim() : '',
       };
-
       try {
         const user = createUser(payload);
         setSession(user.id);
@@ -76,6 +81,27 @@
         err.style.display = 'block';
       }
     });
+  </script>
+
+  <!-- B. Toggle tema -->
+  <button class="theme-toggle" id="themeToggle" aria-label="Ganti tema">🌙</button>
+  <script>
+    (function () {
+      var btn = document.getElementById('themeToggle');
+      function sync() {
+        var cur = document.documentElement.getAttribute('data-theme') || 'light';
+        btn.textContent = cur === 'dark' ? '☀️' : '🌙';
+        btn.title = cur === 'dark' ? 'Mode Terang' : 'Mode Gelap';
+      }
+      sync();
+      btn.addEventListener('click', function () {
+        var cur = document.documentElement.getAttribute('data-theme') || 'light';
+        var next = cur === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('sw_theme', next);
+        sync();
+      });
+    })();
   </script>
 </body>
 </html>
