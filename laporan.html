@@ -1,1 +1,44 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laporan — Sekolah Sampah</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav id="navbar"></nav>
+  <main class="container">
+    <div class="page-header">
+      <div>
+        <h1>Laporan Bulanan</h1>
+        <p class="sub" id="summary"></p>
+      </div>
+      <div style="display:flex; gap:8px; align-items:center;">
+        <input type="month" id="monthFilter" class="btn-secondary">
+        <button class="btn-primary" style="width:auto;" id="btnExport">Export CSV</button>
+      </div>
+    </div>
 
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Tanggal</th>
+            <th>Kategori</th>
+            <th style="text-align:right;">Berat</th>
+            <th>Catatan</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+  </main>
+
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/navbar.js"></script>
+  <script src="js/laporan.js"></script>
+</body>
+</html>
