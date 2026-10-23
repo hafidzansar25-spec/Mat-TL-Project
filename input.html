@@ -3,14 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Catat Sampah — Sekolah Sampah</title>
+  <title>Catat Sampah — Catatan Bank Sampah</title>
+
+  <!-- A. Init tema sebelum paint -->
+  <script>
+    (function () {
+      var t = localStorage.getItem('sw_theme') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <nav id="navbar"></nav>
   <main class="container">
-    <div style="max-width: 440px; margin: 0 auto;">
-      <h1 style="font-size:22px; margin-bottom:16px;">Catat Sampah</h1>
+    <div style="max-width: 480px; margin: 0 auto;">
+      <div class="page-header">
+        <div>
+          <h1>Catat Sampah</h1>
+          <p class="sub">Tambahkan catatan sampah harianmu</p>
+        </div>
+      </div>
       <div class="card">
         <form id="inputForm">
           <div class="form-group">
@@ -34,8 +48,8 @@
           <button type="submit" class="btn-primary">Simpan</button>
         </form>
       </div>
-      <p style="text-align:center; margin-top:16px;">
-        <a href="dashboard.html" style="font-size:13px; color:#6b7280;">← Kembali ke dashboard</a>
+      <p style="text-align:center; margin-top:18px;">
+        <a href="dashboard.html" style="font-size:13px; color:var(--text-muted);">← Kembali ke dashboard</a>
       </p>
     </div>
   </main>
@@ -44,5 +58,26 @@
   <script src="js/auth.js"></script>
   <script src="js/navbar.js"></script>
   <script src="js/input.js"></script>
+
+  <!-- B. Toggle tema -->
+  <button class="theme-toggle" id="themeToggle" aria-label="Ganti tema">🌙</button>
+  <script>
+    (function () {
+      var btn = document.getElementById('themeToggle');
+      function sync() {
+        var cur = document.documentElement.getAttribute('data-theme') || 'light';
+        btn.textContent = cur === 'dark' ? '☀️' : '🌙';
+        btn.title = cur === 'dark' ? 'Mode Terang' : 'Mode Gelap';
+      }
+      sync();
+      btn.addEventListener('click', function () {
+        var cur = document.documentElement.getAttribute('data-theme') || 'light';
+        var next = cur === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('sw_theme', next);
+        sync();
+      });
+    })();
+  </script>
 </body>
 </html>
