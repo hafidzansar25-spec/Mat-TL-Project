@@ -1107,3 +1107,56 @@ body:has(.auth-wrap) .auth-wrap {
     max-width: none;
   }
 }
+
+/* ============================================================
+   PASSWORD TOGGLE — ikon mata di dalam input
+   ============================================================ */
+.password-wrap {
+  position: relative;
+}
+
+.password-wrap input {
+  padding-right: 46px; /* ruang untuk tombol mata */
+}
+
+.pw-toggle {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.pw-toggle:hover {
+  background: var(--emerald-bg-soft);
+  color: var(--emerald-dark);
+}
+
+.pw-toggle:focus-visible {
+  outline: 2px solid var(--emerald);
+  outline-offset: 1px;
+}
+
+.pw-toggle svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+  pointer-events: none;
+}
+
+/* Default: tampilkan ikon "eye", sembunyikan "eye-off" */
+.pw-toggle .icon-eye-off { display: none; }
+
+/* Saat sandi terlihat: balik */
+.pw-toggle.visible .icon-eye     { display: none; }
+.pw-toggle.visible .icon-eye-off { display: block; }
