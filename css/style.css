@@ -756,3 +756,145 @@ td.num { text-align: right; font-weight: 500; }
 }
 
 [data-theme="dark"] .detail-list .w { color: var(--emerald-light); }
+
+/* ============================================================
+   FIX RESPONSIF — Auth page centering, mobile navbar
+   ============================================================ */
+
+/* --- Login page: center vertikal & horizontal --- */
+body:has(.auth-wrap) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 24px 16px;
+}
+
+body:has(.auth-wrap) .auth-wrap {
+  margin: 0;
+  max-width: 420px;
+  width: 100%;
+}
+
+/* Mobile auth: padding lebih kecil biar tidak "kebesaran" */
+@media (max-width: 480px) {
+  body:has(.auth-wrap) { padding: 16px 20px; }
+  .auth-wrap {
+    padding: 24px 20px;
+    border-radius: 16px;
+  }
+  .auth-wrap h1 {
+    font-size: 20px;
+    margin-bottom: 18px;
+  }
+}
+
+/* --- Tombol Edit di tabel laporan --- */
+.btn-edit-text {
+  background: none;
+  border: none;
+  color: var(--emerald-dark);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  margin-right: 8px;
+}
+.btn-edit-text:hover { text-decoration: underline; }
+[data-theme="dark"] .btn-edit-text { color: var(--emerald-light); }
+
+/* ============================================================
+   MOBILE NAVBAR — 2 baris: brand+logout di atas, menu di bawah
+   (Menggantikan media query lama — karena ditaruh paling akhir,
+    aturan ini yang menang)
+   ============================================================ */
+@media (max-width: 900px) {
+  nav#navbar {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: auto;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    padding: 10px 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  }
+
+  .nav-inner {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    height: auto;
+  }
+
+  /* Brand: mengecil dengan aman, tidak menabrak link */
+  .brand {
+    font-size: 15px;
+    padding: 4px 0;
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* User / logout */
+  .nav-user {
+    order: 2;
+    flex-shrink: 0;
+    padding: 0;
+    background: transparent;
+    border: none;
+    flex-direction: row;
+    gap: 6px;
+  }
+  .user-info { display: none; }
+  .btn-logout {
+    padding: 6px 10px;
+    width: auto;
+    font-size: 12px;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    border-radius: 6px;
+  }
+
+  /* Menu link: baris kedua, bisa di-scroll horizontal */
+  .nav-links {
+    order: 3;
+    flex: 1 1 100%;
+    width: 100%;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 4px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scrollbar-width: none;
+  }
+  .nav-links::-webkit-scrollbar { display: none; }
+  .nav-link {
+    padding: 6px 12px;
+    font-size: 13px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 8px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .nav-link::before { display: none; }
+  .nav-link:hover { background: rgba(255,255,255,0.15); color: #fff; }
+  .nav-link.active {
+    background: rgba(255,255,255,0.25);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+
+  .container {
+    margin-left: 0;
+    padding: 20px 16px 64px;
+    max-width: none;
+  }
+}
