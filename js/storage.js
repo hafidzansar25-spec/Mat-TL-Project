@@ -109,3 +109,14 @@ function getMonthName(date, short = false) {
 function daysInMonth(date) {
   return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
 }
+
+/* ---------- Helpers for edit & duplicate detection ---------- */
+function findEntry(userId, date, category) {
+  return getAllEntries().find(
+    e => e.userId === userId && e.date === date && e.category === category
+  ) || null;
+}
+
+function getEntryById(id) {
+  return getAllEntries().find(e => e.id === id) || null;
+}
